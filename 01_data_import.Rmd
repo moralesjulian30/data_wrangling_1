@@ -10,10 +10,12 @@ This file is for doing data import.
 
 ```{r}
 library(tidyverse)
+library(readxl)
+library(haven)
 ```
 
 Import our first data set
-
+(we went back and amended this data import to include na setting to )
 ```{r}
 litters_df = 
   read_csv(file = "data/FAS_litters.csv",
@@ -24,6 +26,7 @@ litters_df = janitor::clean_names(litters_df)
 ```
 
 Import your second data set
+Janitor cleans data names for sameness (no capitals, same formatting, etc.)
 
 ```{r}
 pups_df=
@@ -56,8 +59,52 @@ skimr::skim(pups_df)
 ```
 
 
-```{r}
 
+
+# Oh excel...
+
+Jenny Bryan made 'readxl' to solve our problems.
+
+```{r}
+mlb_df = read_excel("data/mlb11.xlsx")
+```
+
+Look at the data!
+
+```{r}
+mlb_df
+```
+
+
+Import FOTR words.
+
+```{r}
+fotr_df = 
+  read_excel("data/LotR_Words.xlsx",
+             range = "B3:D6")
+
+fotr_df
+```
+
+what about two towers? (Same file different table within same excel file.)
+
+```{r}
+tt_df = 
+  read_excel("data/LotR_Words.xlsx",
+             range = "F3:H6")
+
+tt_df
+```
+
+## Import SAS
+
+Read in the PULSE set
+
+```{r}
+pulse_df = 
+  read_sas("data/public_pulse_data.sas7bdat")
+
+pulse_df = janitor::clean_names(pulse_df)
 ```
 
 

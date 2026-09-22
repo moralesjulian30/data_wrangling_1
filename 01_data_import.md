@@ -22,7 +22,20 @@ library(tidyverse)
     ## ✖ dplyr::lag()    masks stats::lag()
     ## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
 
-Import our first data set
+``` r
+library(readxl)
+```
+
+    ## Warning: package 'readxl' was built under R version 4.6.1
+
+``` r
+library(haven)
+```
+
+    ## Warning: package 'haven' was built under R version 4.6.1
+
+Import our first data set (we went back and amended this data import to
+include na setting to )
 
 ``` r
 litters_df = 
@@ -44,7 +57,8 @@ litters_df =
 litters_df = janitor::clean_names(litters_df)
 ```
 
-Import your second data set
+Import your second data set Janitor cleans data names for sameness (no
+capitals, same formatting, etc.)
 
 ``` r
 pups_df=
@@ -180,3 +194,79 @@ Data summary
 | pd_eyes       |        13 |          0.96 | 12.99 | 0.62 |  12 |  13 |  13 |  13 |   15 | ▂▇▁▂▁ |
 | pd_pivot      |        13 |          0.96 |  7.09 | 1.51 |   4 |   6 |   7 |   8 |   12 | ▂▇▂▂▁ |
 | pd_walk       |         0 |          1.00 |  9.50 | 1.34 |   7 |   9 |   9 |  10 |   14 | ▆▇▇▂▁ |
+
+# Oh excel…
+
+Jenny Bryan made ‘readxl’ to solve our problems.
+
+``` r
+mlb_df = read_excel("data/mlb11.xlsx")
+```
+
+Look at the data!
+
+``` r
+mlb_df
+```
+
+    ## # A tibble: 30 × 12
+    ##    team        runs at_bats  hits homeruns bat_avg strikeouts stolen_bases  wins
+    ##    <chr>      <dbl>   <dbl> <dbl>    <dbl>   <dbl>      <dbl>        <dbl> <dbl>
+    ##  1 Texas Ran…   855    5659  1599      210   0.283        930          143    96
+    ##  2 Boston Re…   875    5710  1600      203   0.28        1108          102    90
+    ##  3 Detroit T…   787    5563  1540      169   0.277       1143           49    95
+    ##  4 Kansas Ci…   730    5672  1560      129   0.275       1006          153    71
+    ##  5 St. Louis…   762    5532  1513      162   0.273        978           57    90
+    ##  6 New York …   718    5600  1477      108   0.264       1085          130    77
+    ##  7 New York …   867    5518  1452      222   0.263       1138          147    97
+    ##  8 Milwaukee…   721    5447  1422      185   0.261       1083           94    96
+    ##  9 Colorado …   735    5544  1429      163   0.258       1201          118    73
+    ## 10 Houston A…   615    5598  1442       95   0.258       1164          118    56
+    ## # ℹ 20 more rows
+    ## # ℹ 3 more variables: new_onbase <dbl>, new_slug <dbl>, new_obs <dbl>
+
+Import FOTR words.
+
+``` r
+fotr_df = 
+  read_excel("data/LotR_Words.xlsx",
+             range = "B3:D6")
+
+fotr_df
+```
+
+    ## # A tibble: 3 × 3
+    ##   Race   Female  Male
+    ##   <chr>   <dbl> <dbl>
+    ## 1 Elf      1229   971
+    ## 2 Hobbit     14  3644
+    ## 3 Man         0  1995
+
+what about two towers? (Same file different table within same excel
+file.)
+
+``` r
+tt_df = 
+  read_excel("data/LotR_Words.xlsx",
+             range = "F3:H6")
+
+tt_df
+```
+
+    ## # A tibble: 3 × 3
+    ##   Race   Female  Male
+    ##   <chr>   <dbl> <dbl>
+    ## 1 Elf       331   513
+    ## 2 Hobbit      0  2463
+    ## 3 Man       401  3589
+
+## Import SAS
+
+Read in the PULSE set
+
+``` r
+pulse_df = 
+  read_sas("data/public_pulse_data.sas7bdat")
+
+pulse_df = janitor::clean_names(pulse_df)
+```
