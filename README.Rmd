@@ -2,4 +2,4 @@
 
 Julian Morales
 
-This is code from in class for datawrangling.
+This is code from in class for data wrangling.
